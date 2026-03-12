@@ -13,6 +13,11 @@ class iPodViewModel: ObservableObject {
     // MARK: - Menu State
     @Published var selectedIndex: Int = 0
     @Published var slideDirection: Int = 1
+
+    @Published var currentTheme: iPodTheme = .classic
+
+    // MARK: - Music Manager
+    @Published var music = MusicManager.shared
     
     // MARK: - Menus
     var mainMenuItems: [MenuItem] {
@@ -36,8 +41,8 @@ class iPodViewModel: ObservableObject {
     
     var settingsMenuItems: [MenuItem] {
         [
-            MenuItem(title: "About"),
-            MenuItem(title: "Brightness"),
+            MenuItem(title: "Theme", screen: .themeSettings),
+            MenuItem(title: "About", screen: .aboutSettings),
         ]
     }
     
@@ -125,6 +130,20 @@ class iPodViewModel: ObservableObject {
         case .artistList: return "Artists"
         case .albumList: return "Albums"
         case .playlistList: return "Playlists"
+        case .themeSettings: return "Theme"
+        case .aboutSettings: return "About"
         }
+    }
+    // MARK: - Music Actions
+    func togglePlayPause() {
+        music.togglePlayPause()
+    }
+
+    func skipNext() {
+        music.skipNext()
+    }
+
+    func skipPrevious() {
+        music.skipPrevious()
     }
 }
