@@ -1,10 +1,3 @@
-//
-//  MenuListView.swift
-//  iPod
-//
-//  Created by Can Arda on 08.03.26.
-//
-
 import SwiftUI
 
 struct MenuListView: View {
@@ -27,6 +20,6 @@ struct MenuListView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(red: 0.82, green: 0.88, blue: 0.96))
+        .background(vm.currentTheme.screenBackground)
     }
 }

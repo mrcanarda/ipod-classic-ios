@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		21CA318D2F622F1C00F9D0E7 /* MusicKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21CA318C2F622F1C00F9D0E7 /* MusicKit.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		21CA31172F5DEF3000F9D0E7 /* iPod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPod.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		21CA318C2F622F1C00F9D0E7 /* MusicKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MusicKit.framework; path = System/Library/Frameworks/MusicKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21CA318D2F622F1C00F9D0E7 /* MusicKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +39,7 @@
 			isa = PBXGroup;
 			children = (
 				21CA31192F5DEF3000F9D0E7 /* iPod */,
+				21CA318B2F622F1B00F9D0E7 /* Frameworks */,
 				21CA31182F5DEF3000F9D0E7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +50,14 @@
 				21CA31172F5DEF3000F9D0E7 /* iPod.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		21CA318B2F622F1B00F9D0E7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				21CA318C2F622F1C00F9D0E7 /* MusicKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

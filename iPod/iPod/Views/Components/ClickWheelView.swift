@@ -50,63 +50,75 @@ struct ClickWheelView: View {
                         }
                 )
             
-            // MENU
-            Text("MENU")
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundColor(Color("iPodWheelText"))
-                .offset(y: -(wheelSize / 2 - 24))
-                .onTapGesture {
-                    HapticManager.back()
-                    vm.goBack()
-                }
+            // MENU (üst)
+            Button {
+                HapticManager.back()
+                vm.goBack()
+            } label: {
+                Text("MENU")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(Color("iPodWheelText"))
+                    .frame(width: 70, height: 40)
+            }
+            .offset(y: -(wheelSize / 2 - 28))
             
             // Forward (sağ)
-            Image(systemName: "forward.end.fill")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(Color("iPodWheelText"))
-                .offset(x: wheelSize / 2 - 28)
-                .onTapGesture {
-                    HapticManager.select()
-                }
+            Button {
+                HapticManager.select()
+                vm.skipNext()
+            } label: {
+                Image(systemName: "forward.end.fill")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(Color("iPodWheelText"))
+                    .frame(width: 40, height: 40)
+            }
+            .offset(x: wheelSize / 2 - 32)
             
             // Backward (sol)
-            Image(systemName: "backward.end.fill")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(Color("iPodWheelText"))
-                .offset(x: -(wheelSize / 2 - 28))
-                .onTapGesture {
-                    HapticManager.select()
-                }
+            Button {
+                HapticManager.select()
+                vm.skipPrevious()
+            } label: {
+                Image(systemName: "backward.end.fill")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(Color("iPodWheelText"))
+                    .frame(width: 40, height: 40)
+            }
+            .offset(x: -(wheelSize / 2 - 32))
             
             // Play/Pause (alt)
-            Image(systemName: "playpause.fill")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(Color("iPodWheelText"))
-                .offset(y: wheelSize / 2 - 24)
-                .onTapGesture {
-                    HapticManager.select()
-                }
+            Button {
+                HapticManager.select()
+                vm.togglePlayPause()
+            } label: {
+                Image(systemName: "playpause.fill")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(Color("iPodWheelText"))
+                    .frame(width: 40, height: 40)
+            }
+            .offset(y: wheelSize / 2 - 28)
             
             // Center button
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [Color("iPodWheelLight"), Color("iPodWheelGray")],
-                        center: .topLeading,
-                        startRadius: 5,
-                        endRadius: 60
+            Button {
+                HapticManager.select()
+                vm.selectCurrent()
+            } label: {
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [Color("iPodWheelLight"), Color("iPodWheelGray")],
+                            center: .topLeading,
+                            startRadius: 5,
+                            endRadius: 60
+                        )
                     )
-                )
-                .frame(width: centerSize, height: centerSize)
-                .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
-                .overlay(
-                    Circle()
-                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
-                )
-                .onTapGesture {
-                    HapticManager.select()
-                    vm.selectCurrent()
-                }
+                    .frame(width: centerSize, height: centerSize)
+                    .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+                    .overlay(
+                        Circle()
+                            .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                    )
+            }
         }
     }
     
