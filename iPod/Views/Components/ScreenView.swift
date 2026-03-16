@@ -2,16 +2,13 @@ import SwiftUI
 
 struct ScreenView: View {
     @EnvironmentObject var vm: iPodViewModel
+    @EnvironmentObject var music: MusicManager
     
     var body: some View {
         VStack(spacing: 0) {
             // Title bar
             ZStack {
-                LinearGradient(
-                    colors: [Color("iPodBlue"), Color("iPodBlueDark")],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+                vm.currentTheme.titleBarColor
                 HStack {
                     Spacer()
                     Text(vm.screenTitle)
@@ -26,7 +23,7 @@ struct ScreenView: View {
             }
             .frame(height: 24)
             
-            // Menu
+            // Content
             screenContent
                 .transition(
                     .asymmetric(
@@ -46,8 +43,21 @@ struct ScreenView: View {
             MenuListView()
         case .nowPlaying:
             NowPlayingScreenView()
-        default:
-            EmptyListView()
+                .environmentObject(music)
+        case .songList:
+            SongListView()
+        case .artistList:
+            ArtistListView()
+        case .albumList:
+            AlbumListView()
+        case .playlistList:
+            PlaylistListView()
+        case .themeSettings:
+            ThemeSettingsView()
+        case .aboutSettings:
+            AboutView()
+        case .photosView:
+            PhotosView()
         }
     }
 }

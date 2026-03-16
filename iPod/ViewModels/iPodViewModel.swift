@@ -24,7 +24,8 @@ class iPodViewModel: ObservableObject {
         [
             MenuItem(title: "Music", screen: .musicMenu),
             MenuItem(title: "Now Playing", screen: .nowPlaying),
-            MenuItem(title: "Photos"),
+            MenuItem(title: "Photos", screen: .photosView),
+
             MenuItem(title: "Settings", screen: .settings),
         ]
     }
@@ -62,15 +63,32 @@ class iPodViewModel: ObservableObject {
     
     // MARK: - Navigation
     func selectCurrent() {
-        let items = currentMenuItems
-        guard selectedIndex < items.count else { return }
-        let item = items[selectedIndex]
-        if let screen = item.screen {
+        switch currentScreen {
+        case .mainMenu, .musicMenu, .settings, .themeSettings:
+            let items = currentMenuItems
+            guard selectedIndex < items.count else { return }
+            let item = items[selectedIndex]
+            if let screen = item.screen {
+                slideDirection = 1
+                screenStack.append(screen)
+                selectedIndex = 0
+            }
+            item.action?()
+        case .artistList:
             slideDirection = 1
-            screenStack.append(screen)
+            screenStack.append(.songList)
             selectedIndex = 0
+        case .albumList:
+            slideDirection = 1
+            screenStack.append(.songList)
+            selectedIndex = 0
+        case .playlistList:
+            slideDirection = 1
+            screenStack.append(.songList)
+            selectedIndex = 0
+        default:
+            break
         }
-        item.action?()
     }
     
     func goBack() {
@@ -132,6 +150,8 @@ class iPodViewModel: ObservableObject {
         case .playlistList: return "Playlists"
         case .themeSettings: return "Theme"
         case .aboutSettings: return "About"
+        case .photosView: return "Photos"
+
         }
     }
     // MARK: - Music Actions

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct iPodBodyView: View {
     @StateObject var vm = iPodViewModel()
+    @ObservedObject var music = MusicManager.shared
     
     var body: some View {
         ZStack {
@@ -9,7 +10,6 @@ struct iPodBodyView: View {
             
             VStack(spacing: 0) {
                 ZStack {
-                    // Gövde
                     RoundedRectangle(cornerRadius: 24)
                         .fill(Color(red: 0.96, green: 0.96, blue: 0.96))
                         .shadow(color: .black.opacity(0.6), radius: 24, x: 0, y: 12)
@@ -19,7 +19,6 @@ struct iPodBodyView: View {
                         )
                     
                     VStack(spacing: 16) {
-                        // Ekran çerçevesi
                         ZStack {
                             RoundedRectangle(cornerRadius: 6)
                                 .fill(Color.black)
@@ -27,10 +26,10 @@ struct iPodBodyView: View {
                             
                             ScreenView()
                                 .environmentObject(vm)
+                                .environmentObject(music)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
                         .frame(width: 310, height: 230)
-
                         .background(Color.black)
                         .clipShape(RoundedRectangle(cornerRadius: 7))
                         .overlay(
@@ -38,7 +37,6 @@ struct iPodBodyView: View {
                                 .stroke(Color.black, lineWidth: 3)
                         )
                         
-                        // Click Wheel
                         ClickWheelView()
                             .environmentObject(vm)
                     }
