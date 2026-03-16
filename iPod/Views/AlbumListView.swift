@@ -70,5 +70,8 @@ struct AlbumListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(vm.currentTheme.screenBackground)
+        .onAppear {
+            vm.listCount = albums.count
+        }
     }
 }

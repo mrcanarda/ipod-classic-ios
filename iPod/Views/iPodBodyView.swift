@@ -19,6 +19,7 @@ struct iPodBodyView: View {
                         )
                     
                     VStack(spacing: 16) {
+                        // Screen
                         ZStack {
                             RoundedRectangle(cornerRadius: 6)
                                 .fill(Color.black)
@@ -37,6 +38,46 @@ struct iPodBodyView: View {
                                 .stroke(Color.black, lineWidth: 3)
                         )
                         
+                        // Mini now playing bar
+                        if music.isPlaying || music.currentSong != nil {
+                            HStack(spacing: 6) {
+                                Image(systemName: music.isPlaying ? "play.fill" : "pause.fill")
+                                    .font(.system(size: 9))
+                                    .foregroundColor(.gray)
+                                
+                                Text(music.currentSong?.title ?? "")
+                                    .font(.system(size: 10, weight: .medium))
+                                    .foregroundColor(.gray)
+                                    .lineLimit(1)
+                                
+                                Text("—")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.gray.opacity(0.6))
+                                
+                                Text(music.currentSong?.artist ?? "")
+                                    .font(.system(size: 10))
+                                    .foregroundColor(.gray.opacity(0.6))
+                                    .lineLimit(1)
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 5)
+                            .background(Color.black.opacity(0.06))
+                            .clipShape(Capsule())
+                            .onTapGesture {
+                                vm.slideDirection = 1
+                                if vm.currentScreen != .nowPlaying {
+                                    vm.screenStack.append(.nowPlaying)
+                                }
+                            }
+                        }
+                        
+                        // Apple logo
+                        Image(systemName: "apple.logo")
+                            .font(.system(size: 18))
+                            .foregroundColor(Color(red: 0.72, green: 0.72, blue: 0.72))
+                            .padding(.bottom, 2)
+                        
+                        // Click Wheel
                         ClickWheelView()
                             .environmentObject(vm)
                     }

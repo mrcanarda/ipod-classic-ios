@@ -38,7 +38,7 @@ struct PhotosView: View {
                     AsyncImage(url: URL(string: photos[index].url)) { image in
                         image
                             .resizable()
-                            .scaledToFill()
+                            .scaledToFit()
                     } placeholder: {
                         Color.gray.opacity(0.3)
                             .overlay(

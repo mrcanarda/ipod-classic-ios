@@ -13,8 +13,8 @@ class iPodViewModel: ObservableObject {
     // MARK: - Menu State
     @Published var selectedIndex: Int = 0
     @Published var slideDirection: Int = 1
-
     @Published var currentTheme: iPodTheme = .classic
+    @Published var listCount: Int = 0
 
     // MARK: - Music Manager
     @Published var music = MusicManager.shared
@@ -25,7 +25,6 @@ class iPodViewModel: ObservableObject {
             MenuItem(title: "Music", screen: .musicMenu),
             MenuItem(title: "Now Playing", screen: .nowPlaying),
             MenuItem(title: "Photos", screen: .photosView),
-
             MenuItem(title: "Settings", screen: .settings),
         ]
     }
@@ -74,18 +73,16 @@ class iPodViewModel: ObservableObject {
                 selectedIndex = 0
             }
             item.action?()
-        case .artistList:
+        case .artistList, .albumList, .playlistList:
             slideDirection = 1
             screenStack.append(.songList)
             selectedIndex = 0
-        case .albumList:
+
+        case .songList:
+            let song = music.songs[selectedIndex]
+            music.play(song: song)
             slideDirection = 1
-            screenStack.append(.songList)
-            selectedIndex = 0
-        case .playlistList:
-            slideDirection = 1
-            screenStack.append(.songList)
-            selectedIndex = 0
+            screenStack.append(.nowPlaying)
         default:
             break
         }
@@ -99,13 +96,23 @@ class iPodViewModel: ObservableObject {
     }
     
     func menuUp() {
-        guard !currentMenuItems.isEmpty else { return }
-        selectedIndex = max(0, selectedIndex - 1)
+        switch currentScreen {
+        case .artistList, .albumList, .playlistList, .songList:
+            selectedIndex = max(0, selectedIndex - 1)
+        default:
+            guard !currentMenuItems.isEmpty else { return }
+            selectedIndex = max(0, selectedIndex - 1)
+        }
     }
     
     func menuDown() {
-        guard !currentMenuItems.isEmpty else { return }
-        selectedIndex = min(currentMenuItems.count - 1, selectedIndex + 1)
+        switch currentScreen {
+        case .artistList, .albumList, .playlistList, .songList:
+            selectedIndex = min(listCount - 1, selectedIndex + 1)
+        default:
+            guard !currentMenuItems.isEmpty else { return }
+            selectedIndex = min(currentMenuItems.count - 1, selectedIndex + 1)
+        }
     }
     
     // MARK: - Wheel
@@ -151,9 +158,9 @@ class iPodViewModel: ObservableObject {
         case .themeSettings: return "Theme"
         case .aboutSettings: return "About"
         case .photosView: return "Photos"
-
         }
     }
+    
     // MARK: - Music Actions
     func togglePlayPause() {
         music.togglePlayPause()

@@ -11,13 +11,13 @@ struct ArtistListView: View {
     @EnvironmentObject var vm: iPodViewModel
     
     let artists = [
+        "Amon Amarth",
+        "In Flames",
         "Meshuggah",
         "Nine Inch Nails",
         "Opeth",
         "The Devil Wears Prada",
         "Theocracy",
-        "In Flames",
-        "Amon Amarth",
     ]
     
     var body: some View {
@@ -60,5 +60,8 @@ struct ArtistListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(vm.currentTheme.screenBackground)
+        .onAppear {
+            vm.listCount = artists.count
+        }
     }
 }
